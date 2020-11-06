@@ -138,8 +138,8 @@ print(s)
 # 13.1交集并集
 s1 = ([1,2,3])
 s2 = ([2,3,4])
-s1 & s2
-s1 | s2
+# s1 & s2
+# s1 | s2
 
 # 14.函数
 def my_abs( xx ):
@@ -398,4 +398,21 @@ print("检测 set：",isinstance(([]),Iterator))
 
 
 # 19.高阶函数
-#
+# 19.1.变量可以指向函数,把函数本身赋值给变量
+my_abs = abs
+print(my_abs(-10))
+# 19.2.函数名也是变量,函数名其实就是指向函数的变量,把abs指向其他对象
+# abs = 10
+# abs(-10)
+# 要让修改abs变量的指向在其它模块也生效，要用import builtins; builtins.abs = 10
+# 19.3.传入函数
+# 既然变量可以指向函数，函数的参数能接收变量，那么一个函数就可以接收另一个函数作为参数，这种函数就称之为高阶函数。
+def add(x,y,f):
+    return f(x)+f(y)
+sum = add(-10,-10,abs)
+print(sum)
+# 19.4.map/reduce
+# Python内建了map()和reduce()函数
+
+
+
