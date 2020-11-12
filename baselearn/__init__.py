@@ -800,3 +800,74 @@ print(day1)
 print(Weekday.Tue)
 print(Weekday['Tue'])
 print(Weekday.Tue.value)
+
+# 20.8.使用元类
+# 动态语言和静态语言最大的不同，就是函数和类的定义，不是编译时定义的，而是运行时动态创建的。
+print(type(Stu()))
+print(s)
+# <class '__main__.Stu'>
+# <__main__.Stu object at 0x000001A207071908>
+#
+# type()
+# type()函数既可以返回一个对象的类型，又可以创建出新的类型，比如，通过type()函数创建出Hello类
+def fun(self, name = 'value'):
+    print("Hello %s ." % name)
+# 创建Hello class
+Hello = type("Hello", (object,), dict(hello=fun))
+h = Hello()
+h.hello()
+# 创建一个class对象，type()函数依次传入3个参数：
+# 1).class的名称；
+# 2).继承的父类集合，注意Python支持多重继承，如果只有一个父类，别忘了tuple的单元素写法；
+# 3).class的方法名称与函数绑定，这里我们把函数fn绑定到方法名hello上。
+#
+# metaclass:直译为元类，简单的解释就是：
+# 当我们定义了类以后，就可以根据这个类创建出实例，所以：先定义类，然后创建实例。
+# 除了使用type()动态创建类以外，要控制类的创建行为，还可以使用metaclass。
+# metaclass是类的模板，所以必须从`type`类型派生：
+class ListMetaclass(type):
+    def __new__(cls, name, bases, attrs):
+        attrs['add'] = lambda self, value: self.append(value)
+        return type.__new__(cls, name, bases, attrs)
+# 有了ListMetaclass，我们在定义类的时候还要指示使用ListMetaclass来定制类，传入关键字参数metaclass：
+class MyList(list, metaclass=ListMetaclass):
+    pass
+# 当我们传入关键字参数metaclass时，魔术就生效了，它指示Python解释器在创建MyList时，要通过ListMetaclass.__new__()来创建
+# 在此，我们可以修改类的定义，比如，加上新的方法，然后，返回修改后的定义。
+# __new__()方法接收到的参数依次是：
+# 1当前准备创建的类的对象；
+# 2类的名字；
+# 3类继承的父类集合；
+# 4类的方法集合。
+
+# 测试一下MyList是否可以调用add()方法：
+ml = MyList()
+ml.add(1)
+print(ml)
+
+# 要编写一个ORM框架，所有的类都只能动态定义，因为只有使用者才能根据表的结构定义出对应的类来。
+# 让我们来尝试编写一个ORM框架。
+# 编写底层模块的第一步，就是先把调用接口写出来。
+# 比如，使用者如果使用这个ORM框架，想定义一个User类来操作对应的数据库表User，我们期待他写出这样的代码：
+class User(Model):
+    # 定义类的属性到列的映射：
+    id = IntegerField('id')
+    name = StringField('username')
+    email = StringField('email')
+    password = StringField('password')
+# 创建一个实例：
+u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
+# 保存到数据库：
+u.save()
+# 其中，父类Model和属性类型StringField、IntegerField是由ORM框架提供的，剩下的魔术方法比如save()全部由metaclass自动完成。
+# 虽然metaclass的编写会比较复杂，但ORM的使用者用起来却异常简单。
+# 实现该ORM
+# 首先来定义Field类，它负责保存数据库表的字段名和字段类型：
+class Field(object):
+    def __init__(self, name, column_type):
+        self.name = name
+        self.column_type = column_type
+    def __str__(self):
+        return '<%s:%s>' % (self.__class__.__name__, self.name)
+# 在Field的基础上，进一步定义各种类型的Field，比如StringField，IntegerField等等：
+class StringField(Field):
