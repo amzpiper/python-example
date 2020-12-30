@@ -413,9 +413,110 @@ sum = add(-10,-10,abs)
 print(sum)
 # 19.4.map/reduce
 # Python内建了map()和reduce()函数
+# 19.4.1.map
+# map()函数接收两个参数，一个是函数，一个是Iterable，map将传入的函数依次作用到序列的每个元素
+def f(x):
+    return x*x
+r = map(f,[1,2,3,4,5,6])
+r = list(r)
+print(r)
+# 结果r是一个Iterator，Iterator是惰性序列，因此通过list()函数让它把整个序列都计算出来并返回一个list。
+# 19.4.2.reduce
+# reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4)
+from functools import reduce
+def cheng(x,y):
+    return x*y
+print("reduce(cheng,['1','2','3','4','5']):",reduce(cheng,[1,2,3,4,5]))
+# 19.5.filter
+# 删除了偶数，只保留奇数
+print(list(filter(lambda x : x % 2 == 1,[1,2,3,4,5,6,7,8,9,10])))
+# 用filter求素数:埃氏筛选法
+# 1.生成器，并且是一个无限序列
+def odd_iter():
+    n = 1
+    while True:
+        n = n + 2
+        yield n
+# 2.筛选函数
+def not_divisible(n):
+    return lambda x : x % n > 0
+# 生成器，不断返回下一个素数
+def prims():
+    yield 2
+    it = odd_iter()
+    while True:
+        n = next(it)
+        yield n
+        it = filter(not_divisible(n),it)
+# 打印1000以内的函数
+for n in prims():
+    if n < 10:
+        print(n)
+    else:
+        break
+# 19.5.sorted
+list = sorted([34,1,31,-23,0])
+print(list)
+list = sorted([34,1,31,-23,0],key=abs)
+print(list)
+list = sorted(['Zeb','ord','abe','C'],key=str.upper)
+print(list)
+# 19.6.返回函数
+# 不需要立刻求和，而是在后面的代码中,返回求和的函数
+def lazy_sum(*args):
+    def sum():
+        ax = 0
+        for x in args:
+            ax += x
+        return ax
+    return sum
+f = lazy_sum(1,2,3,4,5,6,7,8,9,10)
+print(f)
+print(f())
+# 返回函数不要引用任何循环变量，或者后续会发生变化的变量。
+def count():
+    fs = []
+    for i in range(1, 4):
+        def f():
+             return i*i
+        fs.append(f)
+    return fs
+
+f1, f2, f3 = count()
+print("f1():",f1(),"f2():",f2(),"f3():",f3())
+# 一定要引用循环变量怎么办？方法是再创建一个函数，用该函数的参数绑定循环变量当前的值
+def count():
+    fs = []
+    def f(j):
+        def g():
+             return j*j
+        return g
+    fs = []
+    for i in range(1,4):
+        fs.append(f(i))
+    return fs
+
+f1, f2, f3 = count()
+print("f1():",f1(),"f2():",f2(),"f3():",f3())
+
+# 装饰器
+# 1.decorator就是一个返回函数的高阶函数
+def log(func):
+    def wrapper():
+        print('call %s():' % func.__name__)
+        func()
+        print('call %s():' % func.__name__)
+        # return "func"
+    return wrapper
+# 2.把@log放到now()函数的定义处，相当于执行了语句：now = log(now)
+@log
+def now():
+    print("2015-3-25")
+
+now()
 
 
-# 19.*. 偏函数
+# 19.7. 偏函数
 # 假设要转换大量的二进制字符串，每次都传入int(x, base=2)非常麻烦，于是，我们想到，可以定义一个int2()的函数，默认把base=2传进去
 def int2(x, base=2):
     return int(x, base)
@@ -825,13 +926,13 @@ h.hello()
 # 当我们定义了类以后，就可以根据这个类创建出实例，所以：先定义类，然后创建实例。
 # 除了使用type()动态创建类以外，要控制类的创建行为，还可以使用metaclass。
 # metaclass是类的模板，所以必须从`type`类型派生：
-class ListMetaclass(type):
-    def __new__(cls, name, bases, attrs):
-        attrs['add'] = lambda self, value: self.append(value)
-        return type.__new__(cls, name, bases, attrs)
-# 有了ListMetaclass，我们在定义类的时候还要指示使用ListMetaclass来定制类，传入关键字参数metaclass：
-class MyList(list, metaclass=ListMetaclass):
-    pass
+# class ListMetaclass(type):
+#     def __new__(cls, name, bases, attrs):
+#         attrs['add'] = lambda self, value: self.append(value)
+#         return type.__new__(cls, name, bases, attrs)
+# # 有了ListMetaclass，我们在定义类的时候还要指示使用ListMetaclass来定制类，传入关键字参数metaclass：
+# class MyList(list, metaclass=ListMetaclass):
+#     pass
 # 当我们传入关键字参数metaclass时，魔术就生效了，它指示Python解释器在创建MyList时，要通过ListMetaclass.__new__()来创建
 # 在此，我们可以修改类的定义，比如，加上新的方法，然后，返回修改后的定义。
 # __new__()方法接收到的参数依次是：
@@ -841,16 +942,86 @@ class MyList(list, metaclass=ListMetaclass):
 # 4类的方法集合。
 
 # 测试一下MyList是否可以调用add()方法：
-ml = MyList()
-ml.add(1)
-print(ml)
+# ml = MyList()
+# ml.add(1)
+# print(ml)
 
+# 其中，父类Model和属性类型StringField、IntegerField是由ORM框架提供的，剩下的魔术方法比如save()全部由metaclass自动完成。
+# 虽然metaclass的编写会比较复杂，但ORM的使用者用起来却异常简单。
+# 实现该ORM
+# 首先来定义Field类，它负责保存数据库表的字段名和字段类型：
+class Field(object):
+    def __init__(self, name, column_type):
+        self.name = name
+        self.column_type = column_type
+    def __str__(self):
+        return '<%s:%s>' % (self.__class__.__name__, self.name)
+# 在Field的基础上，进一步定义各种类型的Field，比如StringField，IntegerField等等：
+class StringField(Field):
+    def __init__(self, name):
+        super(StringField,self).__init__(name, 'varchar(100)')
+class IntegerField(Field):
+    def __init__(self, name):
+        super(IntegerField,self).__init__(name, 'bigint')
+# 下一步，就是编写最复杂的ModelMetaclass了：
+class ModelMetaclass(type):
+    def __new__(cls, name, bases, attrs):
+        if name == 'Model':
+            return type.__new__(cls, name, bases, attrs)
+        print('Found model: %s' % name)
+        mappings = dict()
+        for k, v in attrs.items():
+            if isinstance(v, Field):
+                print('Found mapping: %s ==> %s' % (k, v))
+                mappings[k] = v
+        for k in mappings.keys():
+            attrs.pop(k)
+        # 保存属性和列的映射
+        attrs['__mappings__'] = mappings
+        # 假设表名和类名一致
+        attrs['__table__'] = name
+        return type.__new__(cls, name, bases, attrs)
+# 以及基类Model：
+class Model(dict, metaclass=ModelMetaclass):
+    def __init__(self, **kw):
+        super(Model, self).__init__(**kw)
+
+    def __getattr__(self, key):
+        try:
+            return self[key]
+        except KeyError:
+            raise AttributeError(r"'Model' object has no attribute '%s'" % key)
+
+    def __setattr__(self, key, value):
+        self[key] = value
+
+    def save(self):
+        fields = []
+        params = []
+        args = []
+        for k, v in self.__mappings__.items():
+            fields.append(v.name)
+            params.append('?')
+            args.append(getattr(self, k, None))
+        sql = 'insert into %s (%s) values (%s)' % (self.__table__, ','.join(fields), ','.join(params))
+        print('SQL: %s' % sql)
+        print('ARGS: %s' % str(args))
+# 当用户定义一个class User(Model)时，Python解释器首先在当前类User的定义中查找metaclass，如果没有找到
+# 就继续在父类Model中查找metaclass，找到了，就使用Model中定义的metaclass的ModelMetaclass来创建User类;
+# 也就是说，metaclass可以隐式地继承到子类，但子类自己却感觉不到。
+# 在ModelMetaclass中，一共做了几件事情：
+# 排除掉对Model类的修改；
+# 在当前类（比如User）中查找定义的类的所有属性，如果找到一个Field属性，就把它保存到一个__mappings__的dict中，
+# 同时从类属性中删除该Field属性，否则，容易造成运行时错误（实例的属性会遮盖类的同名属性）；
+# 把表名保存到__table__中，这里简化为表名默认为类名。
+# 在Model类中，就可以定义各种操作数据库的方法，比如save()，delete()，find()，update等等
 # 要编写一个ORM框架，所有的类都只能动态定义，因为只有使用者才能根据表的结构定义出对应的类来。
 # 让我们来尝试编写一个ORM框架。
 # 编写底层模块的第一步，就是先把调用接口写出来。
 # 比如，使用者如果使用这个ORM框架，想定义一个User类来操作对应的数据库表User，我们期待他写出这样的代码：
 # class User(Model):
     # 定义类的属性到列的映射：
+<<<<<<< HEAD:base/__init__.py
     # id = IntegerField('id')
     # name = StringField('username')
     # email = StringField('email')
@@ -902,3 +1073,121 @@ def abs(n):
  
 #  import doctest
 #  doctest.testmod()
+=======
+    id = IntegerField('id')
+    name = StringField('username')
+    email = StringField('email')
+    password = StringField('password')
+
+u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
+u.save()
+
+# 22.错误、调试和测试
+# 22.1.错误处理
+try:
+    print("try")
+    r = 10 / 0
+    print("result:", r)
+except ZeroDivisionError as e:
+    print("except:", e)
+finally:
+    print("finally")
+print('END')
+# 错误应该有很多种类，如果发生了不同类型的错误，应该由不同的except语句块处理。没错，可以有多个except来捕获不同类型的错误：
+try:
+    print('try...')
+    r = 10 / int('2')
+    print('result:', r)
+except ValueError as e:
+    print('ValueError:', e)
+except ZeroDivisionError as e:
+    print('ZeroDivisionError:', e)
+# 当没有错误发生时，会自动执行else语句：
+else:
+    print('no error!')
+finally:
+    print('finally...')
+print('END')
+
+# 因为UnicodeError是ValueError的子类，如果有，也被第一个except给捕获了。
+def foo(s):
+    return 10 / int(s)
+try:
+    foo('a')
+except ValueError as e:
+    print('ValueError')
+except UnicodeError as e:
+    print('UnicodeError')
+# 不需要在每个可能出错的地方去捕获错误，只要在合适的层次去捕获错误就可以了。
+
+# 同样是出错，但程序打印完错误信息后会继续执行，并正常退出：
+import logging
+def foo(s):
+    return 10 / int(s)
+
+def bar(s):
+    return foo(s) * 2
+
+def main():
+    try:
+        bar('0')
+    except Exception as e:
+        logging.exception(e)
+main()
+print('END')
+
+# 抛出错误
+# 要抛出错误，首先根据需要，可以定义一个错误的class，选择好继承关系，然后，用raise语句抛出一个错误的实例：
+# class FooError(ValueError):
+#     pass
+# def foo(s):
+#     n = int(s)
+#     if n==0:
+#         # raise FooError('invalid value: %s' % s)
+#     # return 10 / n
+# foo('0')
+#
+# #
+# def bar():
+#     try:
+#         foo('0')
+#     except ValueError as e:
+#         print('ValueError!')
+#         raise
+# bar()
+
+# 22.2.调试
+# 22.2.1.第一种方法简单直接粗暴有效，就是用print()把可能有问题的变量打印出来看看：
+# 22.2.2.断言assert
+def foo(s):
+    n = int(s)
+    assert n != 0, 'n is zero!'
+    return 10 / n
+
+def main():
+    foo('0')
+# Python解释器时可以用-O参数来关闭assert
+# 22.2.3.logging
+import logging
+logging.basicConfig(level=logging.INFO)
+
+s = '0'
+n = int(s)
+logging.info('n = %d' % n)
+print(10 / n)
+# 允许你指定记录信息的级别，有debug，info，warning，error等几个级别，当我们指定level=INFO时，logging.debug就不起作用了
+#  22.2.4.pdb
+# python -m pdb err.py
+# 输入命令l来查看代码
+# 输入命令n可以单步执行代码
+# 任何时候都可以输入命令p 变量名来查看变量
+# 输入命令q结束调试，退出程序
+import pdb
+pdb.set_trace() # 运行到这里会自动暂停
+
+# 22.3.单元测试
+
+
+
+
+>>>>>>> 60649b54cee48ef6eddff8029c8b3cf8fb116cfc:baselearn/__init__.py

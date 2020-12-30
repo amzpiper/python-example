@@ -3,5 +3,9 @@
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="ES6" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.8 (learn-python)" project-jdk-type="Python SDK" />
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.7 (tf2.0.0rc1)" project-jdk-type="Python SDK" />
+>>>>>>> 60649b54cee48ef6eddff8029c8b3cf8fb116cfc
 </project>
