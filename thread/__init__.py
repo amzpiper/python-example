@@ -83,6 +83,7 @@ def write(q):
         p.put(value)
         time.sleep(random.random()*3)
 
+self.read(a)
 
 # 读数据进程
 def read(q):
