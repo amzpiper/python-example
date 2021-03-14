@@ -7,6 +7,7 @@ class RootController(object):
     @expose(generic=True, template='index.html')
     def index(self):
         return dict()
+    
 
     @index.when(method='POST')
     def index_post(self, q):

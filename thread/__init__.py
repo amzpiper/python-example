@@ -75,6 +75,7 @@ print('Exit code:', p.returncode)
 from multiprocessing import Process, Queue
 import os,time,random
 
+
 # 写数据进程
 def write(q):
     print('Process to Write:%s' % os.getpid)
@@ -82,8 +83,6 @@ def write(q):
         print('Put %s in queue.' % value)
         p.put(value)
         time.sleep(random.random()*3)
-
-self.read(a)
 
 # 读数据进程
 def read(q):
