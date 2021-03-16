@@ -1,6 +1,23 @@
 from pecan import expose, redirect
 from webob.exc import status_map
 
+class BooksController(object):
+    @expose()
+    def index(self):
+        return "Welcome to book section."
+    
+    @expose()
+    def bestsellers(self):
+        return "We have 5 books in the top 10."
+
+
+class CatalogController(object):
+    @expose()
+    def index(self):
+        return "Welcome to the catalog."
+
+    books = BooksController()
+
 
 class RootController(object):
 
@@ -21,3 +38,10 @@ class RootController(object):
             status = 500
         message = getattr(status_map.get(status), 'explanation', '')
         return dict(status=status, message=message)
+
+    @expose()
+    def hours(self):
+        return "Open 24/7 on the web"
+
+    catalog = CatalogController()
+    
