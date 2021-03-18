@@ -9,6 +9,8 @@ pecan_project.egg-info/dependency_links.txt
 pecan_project.egg-info/not-zip-safe
 pecan_project.egg-info/requires.txt
 pecan_project.egg-info/top_level.txt
+pecan_project/controllers/BooksController.py
+pecan_project/controllers/CatalogController.py
 pecan_project/controllers/__init__.py
 pecan_project/controllers/root.py
 pecan_project/model/__init__.py
