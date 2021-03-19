@@ -51,16 +51,16 @@ class BaseRestController(rest.RestController):
         return self.show(req, id, *args, **kwargs)
 
     def create(self, req, *args, **kwargs):
-        raise Exception
+        raise Exception('create')
 
     def update(self, req, id, *args, **kwargs):
-        raise Exception
+        raise Exception('update')
 
     def remove(self, req, id, *args, **kwargs):
-        raise Exception
+        raise Exception('remove')
 
     def list(self, req, *args, **kwargs):
-        raise Exception
+        raise Exception('list')
 
     def show(self, req, id, *args, **kwargs):
-        raise Exception
+        raise Exception('show')
