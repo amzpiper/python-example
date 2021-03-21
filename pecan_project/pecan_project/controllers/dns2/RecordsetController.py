@@ -22,6 +22,6 @@ class RecordsetController(object):
             self.view_id=args.get('view_id')
             self.zone_id=args.get('zone_id')
         else:
-            return 'error'
+            return self.return_msg('error', 'view_id or zone_id is inqure', None)
         
-        return 'self.view_id:%s,self.zone_id:%s' % (self.view_id,self.zone_id)
+        return str(args)

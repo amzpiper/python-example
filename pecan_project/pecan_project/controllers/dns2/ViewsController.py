@@ -24,10 +24,10 @@ class ViewsController(object):
     # http://127.0.0.1:8080/dns2/views/show?view_id=123
     @pecan.expose()
     def show(self, view_id):
-        if view_id == None:
-             return self.return_msg('error', 'view_id is inqure', None)
+        if str(view_id) == 0 :
+            return self.return_msg('error', 'view_id is inqure', None)
 
-        return "We have view of %s " % id
+        return "We have view of %s " % view_id
 
     def return_msg(self, status, message, content):
         # dic = {"ret_code": ret_code, "ret_msg": ret_msg}
