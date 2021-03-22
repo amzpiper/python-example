@@ -19,3 +19,4 @@ class RootController(object):
     @pecan.expose(generic=True, template='index.html')
     def index(self):
         return dict()
+        

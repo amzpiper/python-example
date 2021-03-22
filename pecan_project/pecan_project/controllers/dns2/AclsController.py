@@ -5,13 +5,14 @@ Author:Guoyha
 
 import re
 import pecan
-from pecan.core import redirect
-
 from webob.exc import status_map
 from pecan_project.controllers.dns import base
 
 class AclsController(object):
 
+    def __init__(self):
+        self.msg='msg'
+        
     @pecan.expose('json')
     def index(self):
         return {"Information": "The url is for Acl base RestApi "
