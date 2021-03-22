@@ -17,12 +17,12 @@ class ViewsController(object):
                 "interface"}
                 
     # http://127.0.0.1:8080/dns2/views/list
-    @pecan.expose()
+    @pecan.expose('json')
     def list(self):
         return "Welcome to view of list."
     
     # http://127.0.0.1:8080/dns2/views/show?view_id=123
-    @pecan.expose()
+    @pecan.expose('json')
     def show(self, view_id):
         if str(view_id) == 0 :
             return self.return_msg('error', 'view_id is inqure', None)

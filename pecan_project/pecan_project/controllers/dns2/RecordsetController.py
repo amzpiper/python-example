@@ -16,7 +16,7 @@ class RecordsetController(object):
                 "interface"}
 
     # http://127.0.0.1:8080/dns2/rrs/list?views_id=123&zones_id=123
-    @pecan.expose()
+    @pecan.expose('json')
     def list(self,**args):
         if args.get('view_id',-1) or args.get('zone_id',-1):
             self.view_id=args.get('view_id')

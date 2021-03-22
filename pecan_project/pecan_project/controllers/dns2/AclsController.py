@@ -19,12 +19,12 @@ class AclsController(object):
                 "interface"}
 
     # http://127.0.0.1:8080/dns2/acls/list
-    @pecan.expose()
+    @pecan.expose('json')
     def list(self):
         return "Welcome to Acl of list."
     
     # http://127.0.0.1:8080/dns2/acls/show?acl_id=1
-    @pecan.expose()
+    @pecan.expose('json')
     def show(self,acl_id,*args):
         # http://127.0.0.1:8080/dns2/acls/show
         # 不输入参数会报错，且无法捕捉
