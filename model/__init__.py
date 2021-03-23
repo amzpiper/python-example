@@ -1,3 +1,4 @@
+# datetime
 from datetime import datetime,timedelta
 
 dt = datetime(2015,10,1,12,20,22,22)
@@ -16,3 +17,6 @@ print(now)
 print(now + timedelta(hours=10))
 print(now - timedelta(days=1))
 print(now - timedelta(days=1,hours=2))
+
+
+# 
