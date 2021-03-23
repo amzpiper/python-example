@@ -1023,7 +1023,7 @@ class Model(dict, metaclass=ModelMetaclass):
 # 比如，使用者如果使用这个ORM框架，想定义一个User类来操作对应的数据库表User，我们期待他写出这样的代码：
 # class User(Model):
     # 定义类的属性到列的映射：
-<<<<<<< HEAD:base/__init__.py
+# <<<<<<< HEAD:base/__init__.py
     # id = IntegerField('id')
     # name = StringField('username')
     # email = StringField('email')
@@ -1075,14 +1075,14 @@ def abs(n):
  
 #  import doctest
 #  doctest.testmod()
-=======
+# =======
     id = IntegerField('id')
     name = StringField('username')
     email = StringField('email')
     password = StringField('password')
 
-u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
-u.save()
+# u = User(id=12345, name='Michael', email='test@orm.org', password='my-pwd')
+# u.save()
 
 # 22.错误、调试和测试
 # 22.1.错误处理
@@ -1132,7 +1132,7 @@ def bar(s):
 
 def main():
     try:
-        bar('0')
+        bar('1')
     except Exception as e:
         logging.exception(e)
 main()
@@ -1173,7 +1173,7 @@ def main():
 import logging
 logging.basicConfig(level=logging.INFO)
 
-s = '0'
+s = '1'
 n = int(s)
 logging.info('n = %d' % n)
 print(10 / n)
@@ -1184,12 +1184,7 @@ print(10 / n)
 # 输入命令n可以单步执行代码
 # 任何时候都可以输入命令p 变量名来查看变量
 # 输入命令q结束调试，退出程序
-import pdb
-pdb.set_trace() # 运行到这里会自动暂停
+# import pdb
+# pdb.set_trace() # 运行到这里会自动暂停
 
 # 22.3.单元测试
-
-
-
-
->>>>>>> 60649b54cee48ef6eddff8029c8b3cf8fb116cfc:baselearn/__init__.py
