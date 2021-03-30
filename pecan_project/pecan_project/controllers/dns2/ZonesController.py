@@ -6,11 +6,15 @@ Author:Guoyha
 import pecan
 
 from webob.exc import status_map
-from pecan_project.controllers.dns import base
+from pecan_project.controllers.dns2.zdns_driver import dns_zone_driver
 
 
 class ZonesController(object):
     
+    def __init__(self):
+        self.msg='msg'
+        self.manager = dns_zone_driver.get_instance()
+
     @pecan.expose('json')
     def index(self):
         return {"Information": "The url is for Zones base RestApi "
