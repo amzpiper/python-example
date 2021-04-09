@@ -3,7 +3,7 @@ import sys
 
 
 #打开数据库连接
-conn = pymysql.connect('localhost',user='root',passwd='root')
+conn = pymysql.connect('39.106.63.189',user='root',passwd='root')
 print(conn)
 sys.stdout.write("打开数据库连接 \n")
 sys.stdout.flush()
