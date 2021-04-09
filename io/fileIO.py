@@ -7,6 +7,11 @@ with open('./io/text.txt','r',encoding='utf8',errors='ignore') as f:
         print(line.strip())
 
 #写文件
-with open('./io/text2.txt','w') as f:
+with open('./io/text2.txt','a') as f:
     f.write('text')
+    f.close()
+
+#写文件
+with open('./io/text2.txt','a') as f:
+    f.write('text2')
     f.close()

