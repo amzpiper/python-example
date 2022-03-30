@@ -1,0 +1,72 @@
+<%inherit file="layout.html" />
+
+## provide definitions for blocks we want to redefine
+<%def name="title()">
+华贸&商管-Mock
+</%def>
+
+## now define the body of the template
+    <header>
+        <h1><img src="/images/logo.png" width="100px"/></h1>
+    </header>
+
+    <div id="content">
+        <h2>oauth2配置后自动登录接口设计：</h2>
+
+        <!-- IOC -->
+        <!-- <a href="https://studio.e.huawei.com/magno/render/SmartCampus__SystemManagement_0000000000hdy26HBtdx/Login?code=test">测试IOC</a>
+        <br> -->
+        
+        <!-- 登录 -->
+        <!-- <a href="/login">测试登录</a>
+        <br> -->
+
+        <!-- OAuth鉴权的登录地址 -->
+        <a  href="/login/authorize?client_id=SmartCampus&response_type=code&redirect_uri=https://studio.e.huawei.com/magno/render/SmartCampus__SystemManagement_0000000000c9Kx3qtwsT/Login&scope=base.profile">
+            测试OAuth授权登录
+        </a>
+        <br>
+
+        <!-- 获取accesstoken -->
+        <form method="GET" action="/accesstoke/" >
+            <input type="text" name="grant_type" value="authorization_code"><br>
+            <input type="text" name="code" value="0000000000c9Kx3qtwsT"><br>
+            <input type="text" name="client_id" value="client_id"><br>
+            <input type="text" name="client_secret" value="client_secret"><br>
+            <input type="text" name="redirect_uri" value="https://studio.e.huawei.com/magno/render/SmartCampus__SystemManagement_0000000000c9Kx3qtwsT/Login"><br>
+            <input type="submit" value="测试鉴权获取access_token">
+        </form>
+
+        <!-- 获取用户信息 -->
+        <a href="/userinfo?access_token=accessToken&scope=scope&client_id=123">测试获取用户信息</a>
+        <br>
+
+        <!-- IOC集成第三方时验证ioc的token -->
+        <!-- 获取accesstoken -->
+        <!-- <a href="/oauthserver?access_token=accessToken&scope=scope&client_id=123">测试获取OAuthServer</a>
+        <br> -->
+
+
+        <h2>IAM-FLOW方式登录接口设计：</h2>
+        <!-- 测试获取code -->
+        <a href="/login/authorize?redirect_uri=https://localhost:8001/preview/?code=123&client_id=afpt&scope=123&response_type=code">
+            测试获取code
+        </a>
+        <br>
+
+        <!-- 测试getToken -->
+        <a href="/getToken/?client_id=clientId&grant_type=authorization_code&code=credential&client_secret=clientSecret">
+            测试getToken
+        </a>
+        <br>
+
+        <!-- 测试getUserInfo -->
+        <a href="/getUserInfo/?access_token=accessToken&scope=scope&client_id=123">
+            测试getUserInfo
+        </a>
+        <br>
+
+        <!-- 单点登录华贸ioc -->
+        <a href="https://studio.e.huawei.com/magno/render/hm_bigScreen__HMSystemManagement_0000000000hdy26HBtdx/HuamaoLogin" target="_blank">单点登录华贸ioc</a>
+        
+    </div>

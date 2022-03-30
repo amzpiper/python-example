@@ -1,0 +1,17 @@
+<%inherit file="layout.html" />
+
+## provide definitions for blocks we want to redefine
+<%def name="title()">
+    Hello ${name}!
+</%def>
+
+## now define the body of the template
+    <header>
+        <a href="/">首页</a>
+        <img src="/images/logo.png" />
+    </header>
+    <div>
+        <h1>Hello! ${name}</h1>
+        <p>response:</p>
+        <p>${result}</p>
+    </div>

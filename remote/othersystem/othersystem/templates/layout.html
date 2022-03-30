@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>${self.title()}</title>
+        ${self.style()}
+    </head>
+    <body>
+        ${self.body()}
+    </body>
+
+    ${self.javascript()}
+</html>
+
+<%def name="title()">
+    Default Title
+</%def>
+
+<%def name="style()">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+</%def>
+
+<%def name="javascript()">
+</%def>
