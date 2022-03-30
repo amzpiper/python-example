@@ -1,0 +1,74 @@
+import * as db from 'db';
+import * as sys from 'sys';
+import { getClient } from 'context';
+import { CreateLog } from './ca_cm__identitySendLogEvent';
+import orm from './ca_cm__ormByCondition';
+import { Logger } from './ca_cm__logger';
+
+export class Input {
+    @action.param({ type: 'String', label: 'identityId' })
+    identityId: string;
+}
+
+export class Output {
+    @action.param({ type: 'String[]', label: 'tokens' })
+    tokens: string[];
+}
+
+@useObject(['CA_CM_IdentityLoginLog', 'CA_CM_IdentityLoginAudit'])
+export class CheckMaximumLogin {
+    @action.method({ input: 'Input', output: 'Output', label: 'check Maximum Login' })
+    run(input: Input): Output {
+        const createLog = new CreateLog();
+        const logger = new Logger();
+        const maximumOnlineNumber = Number(sys.getParameter('ca_cm__sameIdentityMaximumOnlineNumber'));
+        logger.info('Get system parameter ca_cm__sameIdentityMaximumOnlineNumber successfully', '', { maximumOnlineNumber });
+
+        // 如果系统参数小于等于0,则不限制登录账户数
+        if (maximumOnlineNumber <= 0) {
+            return {
+                tokens: []
+            };
+        }
+
+        const auditResults = orm.queryByCondition('CA_CM_IdentityLoginAudit', { Identity: input.identityId }, ['Identity']);
+        const tokens = [];
+
+        if (auditResults.total >= maximumOnlineNumber) {
+            const loginAudits = auditResults.results;
+
+            for (let i = maximumOnlineNumber - 1; i < loginAudits.length; i++) {
+                db.object('CA_CM_IdentityLoginAudit').delete(auditResults.results[i].id);
+
+                // 记录登出操作日志
+                db.object('CA_CM_IdentityLoginLog').insert({
+                    Identity: loginAudits[i].Identity,
+                    LoginAccountType: loginAudits[i].LoginAccountType,
+                    LoginAccount: loginAudits[i].LoginAccount,
+                    Type: 'Logout',
+                    LoginTime: new Date(),
+                    IP: getClient(),
+                    Status: 'Success'
+                });
+
+                // 记录园区日志
+                createLog.run({
+                    appName: '',
+                    objectParam: {
+                        identityId: loginAudits[i].Identity
+                    },
+                    functionName: 'ca_cm__checkMaximumLogin',
+                    objectName: 'CA_CM_IdentityLoginAudit,CA_CM_IdentityLoginLog',
+                    boName: 'CM_Identity',
+                    operateType: 'logout',
+                    message: 'More than the maximum number of online users with the same identity',
+                    dataScope: ''
+                });
+
+                tokens.push(loginAudits[i].AccessToken);
+            }
+        }
+
+        return { tokens };
+    }
+}

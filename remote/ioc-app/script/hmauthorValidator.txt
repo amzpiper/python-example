@@ -1,0 +1,136 @@
+// Here's your code.
+import * as http from 'http'
+import * as decimal from 'decimal'
+import * as context from 'context'
+import * as date from 'date'
+import * as db from 'db'
+import * as sys from 'sys';
+
+//入参定义
+@action.object({ type: 'params' })
+export class ParamsInput {
+    @action.param({ type: 'string', isCollection: false, label: 'code', required: true, description: "IAM返回code值" })
+    userToken: string;
+
+    @action.param({ type: 'string', isCollection: false, label: 'code', required: true, description: "IAM返回code值" })
+    uid: string;
+
+    @action.param({ type: 'string', isCollection: false, label: 'accountType', required: false, description: "登录账号类型" })
+    accountType: string;
+
+    @action.param({ type: 'string', isCollection: false, label: 'isAgreePrivacyStatement', required: false, description: "隐私声明" })
+    isAgreePrivacyStatement: string;
+}
+
+//出参定义
+@action.object({ type: 'params' })
+export class ParamsOutput {
+    @action.param({ type: 'Struct', isCollection: false, label: 'Object', required: true, description: "符合查询条件的日志信息列表。如果未查询到符合条件的数据，返回空数组" })
+    user: object;
+}
+
+@action.object({ type: 'method' })
+export class authorValidator {
+    @action.method({ input: 'ParamsInput', output: 'ParamsOutput' })
+    public authorValidator(input: ParamsInput, output: ParamsOutput) {
+        let out = new ParamsOutput();
+        let user = {};
+
+        let credential = "";
+        let userToken = input.userToken;
+        let uid = input.uid;
+        // let clientId = sys.getParameter("IAM_ClientId");
+        // let clientSecret = sys.getParameter("IAM_ClientSecret");
+        let baseUrl = sys.getParameter("SG_BaseUrl");
+
+        //test
+        // baseUrl = "http://39.106.63.189/";
+
+        // let idField = "loginName";
+        // let setting = {
+        //     "clientId": clientId, "clientSecret": clientSecret,
+        //     "baseUrl": baseUrl, "idField": idField
+        // };
+        console.log("guoyuhang-input:", input)
+
+        //基线对接W3 Uniportal Demo，供参考
+        // let client = http.newClient();
+        //1、获取token
+        // const tokenRequest = {
+        //     data: {
+        //         grant_type: 'authorization_code',
+        //         code: input.code,
+        //         client_id: setting.clientId,
+        //         client_secret: setting.clientSecret
+        //         //redirect_uri: setting.redirectUrl
+        //     },
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // };
+
+        // let request = setting.baseUrl + 'getToken/?' + 'client_id=' + setting.clientId + '&grant_type=authorization_code&code=' + credential + '&client_secret=' + setting.clientSecret;
+        // console.log("tokenRequest:", request);
+        // const tokenResp = client.post(request);
+
+        // console.log("tokenResp:", tokenResp);
+        // let tokenBody = JSON.parse(tokenResp.body);
+        // let accessToken = tokenBody.access_token;
+        // console.log("accessToken:", accessToken);
+
+        //test
+        // let tokenBody = tokenResp.body;
+        // let accessToken = tokenBody.access_token;
+        // console.log('accessToken:' + accessToken)
+
+
+        //2、获取用户信息
+        let client = http.newClient();
+        let params = {
+            "accessToken": input.userToken,
+            "uid": input.uid
+        }
+        let request = {
+            data: params,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        };
+        console.log('guoyuhang-request:' + JSON.stringify(request))
+
+        let userPath = baseUrl + '/sso/checkToken';
+        console.log("userPath:", userPath);
+        const userResp = client.post(userPath, request);
+        // const userResp = client.post(userPath);
+        let userBody = userResp.body;
+        console.log('guoyuhang-userbody:' + JSON.stringify(userBody))
+        let returnCode = userBody.returnCode;
+        console.log("guoyuhang-returnCode:", returnCode);
+
+        //test
+        // user['userName'] = 'guoyuhang';
+        // console.log("guoyuhang-user:", user);
+        // out["user"] = user;
+        // return out;
+
+        if (userBody.returnCode == '1003') {
+            context.throwError('SmartCampus__LoginValidateError');
+            return;
+        } else {
+            user['id'] = userBody.data['uid'];
+            user['uid'] = userBody.data['uid'];
+            user['phoneNumber'] = userBody.data['phoneNumber'];
+            user['userStatus'] = userBody.data['userStatus'];
+            user['nickName'] = userBody.data['nickName'];
+            user['sex'] = userBody.data['sex'];
+            user['userType'] = userBody.data['userType'];
+            user['userName'] = "huamao" + userBody.data['userName'];
+            user['delFlag'] = userBody.data['delFlag'];
+            user['email'] = userBody.data['email'];
+        }
+
+        console.log("guoyuhang-user:", user);
+        out["user"] = user;
+        return out;
+    }
+}

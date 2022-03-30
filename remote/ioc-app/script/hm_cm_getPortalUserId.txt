@@ -1,0 +1,36 @@
+import { sql } from 'db';
+import { throwError } from 'context';
+import { Logger } from './ca_cm__logger';
+
+export class Input {
+    @action.param({ type: 'String', required: true })
+    identityId: string;
+}
+
+export class Output {
+    @action.param({ type: 'String' })
+    portalUserId: string;
+}
+
+@useObject(['portaluser'])
+export class GetPortalUserId {
+    @action.method({ input: 'Input', output: 'Output', label: 'get PortalUserId Method' })
+    getPortalUserId(input: Input): Output {
+        const identityId = input.identityId;
+        const logger = new Logger();
+        const portalUserResult = sql().exec('select id from portaluser where partyId = ?', {
+            params: [identityId]
+        });
+
+        if (portalUserResult.length == 0) {
+            logger.error('Get portal user failed', 'No portal user found by identityId', { identityId }, 'Check inputs');
+
+            // 该用户不存在
+            throwError('CM-001000');
+        }
+
+        return {
+            portalUserId: portalUserResult[0]['id']
+        };
+    }
+}

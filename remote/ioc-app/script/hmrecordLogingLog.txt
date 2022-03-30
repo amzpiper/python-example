@@ -1,0 +1,91 @@
+import * as db from 'db';
+import * as context from 'context';
+import orm from './ca_cm__ormByCondition';
+import validator from './ca_cm__validator';
+import { Logger } from './ca_cm__logger';
+
+export class Input {
+    @action.param({ type: 'String', required: true, max: 20, description: 'The identity ID.' })
+    identityId: string;
+
+    @action.param({ type: 'String', max: 64, label: 'Login Name', description: 'Login name is used to access loginAccount, it can be email, phone number or account ID.' })
+    loginName: string;
+
+    @action.param({ type: 'String', required: true, max: 20, label: 'login or logout', description: 'log type, singleSelect login or logout' })
+    logType: string;
+
+    @action.param({ type: 'String', max: 64, label: 'login status', description: 'the result or status of login or logout,such as,successfully or failure' })
+    status: string;
+
+    @action.param({ type: 'String', label: 'loginAccountType', description: 'login Account Type' })
+    loginAccountType?: string;
+}
+
+@useObject(['CA_CM_IdentityLoginLog', 'CA_CM_IdentityLoginAudit', 'CA_CM_LoginAccountTypeDefinition', 'CA_CM_LoginAccount'])
+export class RecordLoginLog {
+    @action.method({ input: 'Input', output: 'Output', label: 'RecordLoginLog Method', description: 'Used after login' })
+    recordLoginLog(input: Input): void {
+        const logType = input.logType;
+        const token = context.getToken();
+        const clientIP = context.getClient().split(':')[0];
+        const userId = context.getUserId();
+        const logger = new Logger();
+        validator.validateParams(input);
+        validator.validatePickList({ Type: input.logType }, 'CA_CM_IdentityLoginLog');
+
+        // 登录时候账号和类型从入参中取，登出时候根据token从在线会话中取
+        let identityLoginAuditId = '';
+        let loginName = input.loginName;
+        let loginAccountTypeId = '';
+        let loginTime = new Date();
+        if (logType === 'Login') {
+            if (input.loginAccountType) {
+                loginAccountTypeId = orm.queryDetail('CA_CM_LoginAccountTypeDefinition', { name: input.loginAccountType }, ['name']).results[0].id;
+            } else {
+                loginAccountTypeId = orm.queryDetail('CA_CM_LoginAccount', { Identity: input.identityId }, ['Identity']).results[0].LoginAccountType;
+            }
+        } else {
+            if (context.getUserType() == context.UserType.User) { //平台用户不允许调用此接口，仅供业务用户使用
+                logger.error('Call forbidden', 'Platform user is not allowed to call this interface', { userId }, 'Check the current user');
+                context.throwError('ca_cm__Forbidden');
+            }
+            const loginLogAudits = orm.queryByCondition('CA_CM_IdentityLoginAudit', { Identity: input.identityId }, ['Identity']).results;
+
+            for (const loginLogAudit of loginLogAudits) {
+                if (loginLogAudit.AccessToken === token) {
+                    loginName = loginLogAudit.LoginAccount;
+                    loginAccountTypeId = loginLogAudit.LoginAccountType;
+                    loginTime = loginLogAudit.LoginTime;
+                    identityLoginAuditId = loginLogAudit.id;
+                }
+            }
+        }
+
+        if (loginAccountTypeId) {
+            db.object('CA_CM_IdentityLoginLog').insert({
+                Identity: input.identityId,
+                LoginAccountType: loginAccountTypeId,
+                LoginAccount: loginName,
+                Type: logType,
+                LoginTime: loginTime,
+                IP: clientIP,
+                Status: input.status || 'Success'
+            });
+        }
+
+        // 操作当前在线会话表，登录时新增，登出时删除
+        if (logType === 'Login') {
+            db.object('CA_CM_IdentityLoginAudit').insert({
+                Identity: input.identityId,
+                LoginAccount: loginName,
+                LoginAccountType: loginAccountTypeId,
+                LoginTime: new Date(),
+                IP: clientIP,
+                AccessToken: token,
+                PortalUser: userId
+            });
+        } else if (identityLoginAuditId) {
+            orm.deleteByCondition('CA_CM_IdentityLoginAudit', { id: identityLoginAuditId }, ['id']);
+        }
+    }
+}
