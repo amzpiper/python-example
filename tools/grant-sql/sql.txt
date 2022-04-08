@@ -1,0 +1,336 @@
+-- 基础物业_服务满意度_季 
+GRANT USAGE  ON SCHEMA dm_property TO rtwg; 
+GRANT SELECT ON TABLE dm_property.dm_property_service_satisfy TO rtwg; 
+GRANT INSERT ON TABLE dm_property.dm_property_service_satisfy TO rtwg; 
+GRANT UPDATE ON TABLE dm_property.dm_property_service_satisfy TO rtwg; 
+GRANT DELETE ON TABLE dm_property.dm_property_service_satisfy TO rtwg; 
+ 
+-- 安全管护_上报隐患_月统计 
+GRANT USAGE  ON SCHEMA dm_security TO rtwg; 
+GRANT SELECT ON TABLE dm_security.dm_security_customer_month TO rtwg; 
+GRANT INSERT ON TABLE dm_security.dm_security_customer_month TO rtwg; 
+GRANT UPDATE ON TABLE dm_security.dm_security_customer_month TO rtwg; 
+GRANT DELETE ON TABLE dm_security.dm_security_customer_month TO rtwg; 
+ 
+-- 安全管护_上报隐患_整改_月统计 
+GRANT USAGE  ON SCHEMA dm_security TO rtwg; 
+GRANT SELECT ON TABLE dm_security.dm_security_customer_reform_month TO rtwg; 
+GRANT INSERT ON TABLE dm_security.dm_security_customer_reform_month TO rtwg; 
+GRANT UPDATE ON TABLE dm_security.dm_security_customer_reform_month TO rtwg; 
+GRANT DELETE ON TABLE dm_security.dm_security_customer_reform_month TO rtwg; 
+ 
+-- 安全管护_处理情况 
+GRANT USAGE  ON SCHEMA dm_security TO rtwg; 
+GRANT SELECT ON TABLE dm_security.dm_security_complete TO rtwg; 
+GRANT INSERT ON TABLE dm_security.dm_security_complete TO rtwg; 
+GRANT UPDATE ON TABLE dm_security.dm_security_complete TO rtwg; 
+GRANT DELETE ON TABLE dm_security.dm_security_complete TO rtwg; 
+ 
+-- 能源管理_总览 
+GRANT USAGE  ON SCHEMA dm_energy TO rtwg; 
+GRANT SELECT ON TABLE dm_energy.dm_energy_overview TO rtwg; 
+GRANT INSERT ON TABLE dm_energy.dm_energy_overview TO rtwg; 
+GRANT UPDATE ON TABLE dm_energy.dm_energy_overview TO rtwg; 
+GRANT DELETE ON TABLE dm_energy.dm_energy_overview TO rtwg; 
+ 
+-- 能源管理_水能耗分析_月 
+GRANT USAGE  ON SCHEMA dm_energy TO rtwg; 
+GRANT SELECT ON TABLE dm_energy.dm_energy_water_month TO rtwg; 
+GRANT INSERT ON TABLE dm_energy.dm_energy_water_month TO rtwg; 
+GRANT UPDATE ON TABLE dm_energy.dm_energy_water_month TO rtwg; 
+GRANT DELETE ON TABLE dm_energy.dm_energy_water_month TO rtwg; 
+ 
+-- 能源管理_电能耗分析_月 
+GRANT USAGE  ON SCHEMA dm_energy TO rtwg; 
+GRANT SELECT ON TABLE dm_energy.dm_energy_electric_month TO rtwg; 
+GRANT INSERT ON TABLE dm_energy.dm_energy_electric_month TO rtwg; 
+GRANT UPDATE ON TABLE dm_energy.dm_energy_electric_month TO rtwg; 
+GRANT DELETE ON TABLE dm_energy.dm_energy_electric_month TO rtwg; 
+ 
+-- 能源管理_热能耗分析_月 
+GRANT USAGE  ON SCHEMA dm_energy TO rtwg; 
+GRANT SELECT ON TABLE dm_energy.dm_energy_heat_month TO rtwg; 
+GRANT INSERT ON TABLE dm_energy.dm_energy_heat_month TO rtwg; 
+GRANT UPDATE ON TABLE dm_energy.dm_energy_heat_month TO rtwg; 
+GRANT DELETE ON TABLE dm_energy.dm_energy_heat_month TO rtwg; 
+ 
+-- 能源管理_水能耗分布 
+GRANT USAGE  ON SCHEMA dm_energy TO rtwg; 
+GRANT SELECT ON TABLE dm_energy.dm_energy_water_distribution TO rtwg; 
+GRANT INSERT ON TABLE dm_energy.dm_energy_water_distribution TO rtwg; 
+GRANT UPDATE ON TABLE dm_energy.dm_energy_water_distribution TO rtwg; 
+GRANT DELETE ON TABLE dm_energy.dm_energy_water_distribution TO rtwg; 
+ 
+-- 能源管理_电能耗分布 
+GRANT USAGE  ON SCHEMA dm_energy TO rtwg; 
+GRANT SELECT ON TABLE dm_energy.dm_energy_electric_distribution TO rtwg; 
+GRANT INSERT ON TABLE dm_energy.dm_energy_electric_distribution TO rtwg; 
+GRANT UPDATE ON TABLE dm_energy.dm_energy_electric_distribution TO rtwg; 
+GRANT DELETE ON TABLE dm_energy.dm_energy_electric_distribution TO rtwg; 
+ 
+-- 智能运维_总览 
+GRANT USAGE  ON SCHEMA dm_operation TO rtwg; 
+GRANT SELECT ON TABLE dm_operation.dm_operation_overview TO rtwg; 
+GRANT INSERT ON TABLE dm_operation.dm_operation_overview TO rtwg; 
+GRANT UPDATE ON TABLE dm_operation.dm_operation_overview TO rtwg; 
+GRANT DELETE ON TABLE dm_operation.dm_operation_overview TO rtwg; 
+ 
+-- 智能运维_告警分类统计 
+GRANT USAGE  ON SCHEMA dm_operation TO rtwg; 
+GRANT SELECT ON TABLE dm_operation.dm_operation_alarm TO rtwg; 
+GRANT INSERT ON TABLE dm_operation.dm_operation_alarm TO rtwg; 
+GRANT UPDATE ON TABLE dm_operation.dm_operation_alarm TO rtwg; 
+GRANT DELETE ON TABLE dm_operation.dm_operation_alarm TO rtwg; 
+ 
+-- 智能运维_处理方式统计 
+GRANT USAGE  ON SCHEMA dm_operation TO rtwg; 
+GRANT SELECT ON TABLE dm_operation.dm_operation_handle TO rtwg; 
+GRANT INSERT ON TABLE dm_operation.dm_operation_handle TO rtwg; 
+GRANT UPDATE ON TABLE dm_operation.dm_operation_handle TO rtwg; 
+GRANT DELETE ON TABLE dm_operation.dm_operation_handle TO rtwg; 
+ 
+-- 智能运维_设备维保_月统计 
+GRANT USAGE  ON SCHEMA dm_operation TO rtwg; 
+GRANT SELECT ON TABLE dm_operation.dm_operation_maintenance_month TO rtwg; 
+GRANT INSERT ON TABLE dm_operation.dm_operation_maintenance_month TO rtwg; 
+GRANT UPDATE ON TABLE dm_operation.dm_operation_maintenance_month TO rtwg; 
+GRANT DELETE ON TABLE dm_operation.dm_operation_maintenance_month TO rtwg; 
+ 
+-- 综合态势_总览 
+GRANT USAGE  ON SCHEMA dm_comprehensive TO rtwg; 
+GRANT SELECT ON TABLE dm_comprehensive.dm_comprehensive_overview TO rtwg; 
+GRANT INSERT ON TABLE dm_comprehensive.dm_comprehensive_overview TO rtwg; 
+GRANT UPDATE ON TABLE dm_comprehensive.dm_comprehensive_overview TO rtwg; 
+GRANT DELETE ON TABLE dm_comprehensive.dm_comprehensive_overview TO rtwg; 
+ 
+-- 综合态势_专项服务_月统计 
+GRANT USAGE  ON SCHEMA dm_comprehensive TO rtwg; 
+GRANT SELECT ON TABLE dm_comprehensive.dm_comprehensive_special_month TO rtwg; 
+GRANT INSERT ON TABLE dm_comprehensive.dm_comprehensive_special_month TO rtwg; 
+GRANT UPDATE ON TABLE dm_comprehensive.dm_comprehensive_special_month TO rtwg; 
+GRANT DELETE ON TABLE dm_comprehensive.dm_comprehensive_special_month TO rtwg; 
+ 
+-- 综合态势_智慧通行 
+GRANT USAGE  ON SCHEMA dm_comprehensive TO rtwg; 
+GRANT SELECT ON TABLE dm_comprehensive.dm_comprehensive_access TO rtwg; 
+GRANT INSERT ON TABLE dm_comprehensive.dm_comprehensive_access TO rtwg; 
+GRANT UPDATE ON TABLE dm_comprehensive.dm_comprehensive_access TO rtwg; 
+GRANT DELETE ON TABLE dm_comprehensive.dm_comprehensive_access TO rtwg; 
+ 
+-- 全国_概览 
+GRANT USAGE  ON SCHEMA dm_whole TO rtwg; 
+GRANT SELECT ON TABLE dm_whole.dm_whole_overview TO rtwg; 
+GRANT INSERT ON TABLE dm_whole.dm_whole_overview TO rtwg; 
+GRANT UPDATE ON TABLE dm_whole.dm_whole_overview TO rtwg; 
+GRANT DELETE ON TABLE dm_whole.dm_whole_overview TO rtwg; 
+ 
+-- 全国_军品物业_客户满意度_年 
+GRANT USAGE  ON SCHEMA dm_whole TO rtwg; 
+GRANT SELECT ON TABLE dm_whole.dm_whole_arm_statisfied_years TO rtwg; 
+GRANT INSERT ON TABLE dm_whole.dm_whole_arm_statisfied_years TO rtwg; 
+GRANT UPDATE ON TABLE dm_whole.dm_whole_arm_statisfied_years TO rtwg; 
+GRANT DELETE ON TABLE dm_whole.dm_whole_arm_statisfied_years TO rtwg; 
+ 
+-- 全国_军品物业_客户满意度_排名 
+GRANT USAGE  ON SCHEMA dm_whole TO rtwg; 
+GRANT SELECT ON TABLE dm_whole.dm_whole_arm_statisfied_pro_ranking TO rtwg; 
+GRANT INSERT ON TABLE dm_whole.dm_whole_arm_statisfied_pro_ranking TO rtwg; 
+GRANT UPDATE ON TABLE dm_whole.dm_whole_arm_statisfied_pro_ranking TO rtwg; 
+GRANT DELETE ON TABLE dm_whole.dm_whole_arm_statisfied_pro_ranking TO rtwg; 
+ 
+-- 全国_产业运营 
+GRANT USAGE  ON SCHEMA dm_whole TO rtwg; 
+GRANT SELECT ON TABLE dm_whole.dm_whole_operate TO rtwg; 
+GRANT INSERT ON TABLE dm_whole.dm_whole_operate TO rtwg; 
+GRANT UPDATE ON TABLE dm_whole.dm_whole_operate TO rtwg; 
+GRANT DELETE ON TABLE dm_whole.dm_whole_operate TO rtwg; 
+ 
+-- 分公司_概览 
+GRANT USAGE  ON SCHEMA dm_branch TO rtwg; 
+GRANT SELECT ON TABLE dm_branch.dm_branch_overview TO rtwg; 
+GRANT INSERT ON TABLE dm_branch.dm_branch_overview TO rtwg; 
+GRANT UPDATE ON TABLE dm_branch.dm_branch_overview TO rtwg; 
+GRANT DELETE ON TABLE dm_branch.dm_branch_overview TO rtwg; 
+ 
+-- 分公司_军品物业_客户满意度_年 
+GRANT USAGE  ON SCHEMA dm_branch TO rtwg; 
+GRANT SELECT ON TABLE dm_branch.dm_branch_arm_statisfied_years TO rtwg; 
+GRANT INSERT ON TABLE dm_branch.dm_branch_arm_statisfied_years TO rtwg; 
+GRANT UPDATE ON TABLE dm_branch.dm_branch_arm_statisfied_years TO rtwg; 
+GRANT DELETE ON TABLE dm_branch.dm_branch_arm_statisfied_years TO rtwg; 
+ 
+-- 分公司_军品物业_客户满意度_排名 
+GRANT USAGE  ON SCHEMA dm_branch TO rtwg; 
+GRANT SELECT ON TABLE dm_branch.dm_branch_arm_statisfied_ranking TO rtwg; 
+GRANT INSERT ON TABLE dm_branch.dm_branch_arm_statisfied_ranking TO rtwg; 
+GRANT UPDATE ON TABLE dm_branch.dm_branch_arm_statisfied_ranking TO rtwg; 
+GRANT DELETE ON TABLE dm_branch.dm_branch_arm_statisfied_ranking TO rtwg; 
+ 
+-- 分公司_产业运营 
+GRANT USAGE  ON SCHEMA dm_branch TO rtwg; 
+GRANT SELECT ON TABLE dm_branch.dm_branch_operate TO rtwg; 
+GRANT INSERT ON TABLE dm_branch.dm_branch_operate TO rtwg; 
+GRANT UPDATE ON TABLE dm_branch.dm_branch_operate TO rtwg; 
+GRANT DELETE ON TABLE dm_branch.dm_branch_operate TO rtwg; 
+ 
+-- 军品物业_概览 
+GRANT USAGE  ON SCHEMA dm_arm TO rtwg; 
+GRANT SELECT ON TABLE dm_arm.dm_arm_overview TO rtwg; 
+GRANT INSERT ON TABLE dm_arm.dm_arm_overview TO rtwg; 
+GRANT UPDATE ON TABLE dm_arm.dm_arm_overview TO rtwg; 
+GRANT DELETE ON TABLE dm_arm.dm_arm_overview TO rtwg; 
+ 
+-- 军品物业_客户满意度_年 
+GRANT USAGE  ON SCHEMA dm_arm TO rtwg; 
+GRANT SELECT ON TABLE dm_arm.dm_arm_statisfied_years TO rtwg; 
+GRANT INSERT ON TABLE dm_arm.dm_arm_statisfied_years TO rtwg; 
+GRANT UPDATE ON TABLE dm_arm.dm_arm_statisfied_years TO rtwg; 
+GRANT DELETE ON TABLE dm_arm.dm_arm_statisfied_years TO rtwg; 
+ 
+-- 军品物业_客户满意度_排名 
+GRANT USAGE  ON SCHEMA dm_arm TO rtwg; 
+GRANT SELECT ON TABLE dm_arm.dm_arm_statisfied_ranking TO rtwg; 
+GRANT INSERT ON TABLE dm_arm.dm_arm_statisfied_ranking TO rtwg; 
+GRANT UPDATE ON TABLE dm_arm.dm_arm_statisfied_ranking TO rtwg; 
+GRANT DELETE ON TABLE dm_arm.dm_arm_statisfied_ranking TO rtwg; 
+ 
+-- 军品物业_软文阅读量排行 
+GRANT USAGE  ON SCHEMA dm_arm TO rtwg; 
+GRANT SELECT ON TABLE dm_arm.dm_arm_read_ranking TO rtwg; 
+GRANT INSERT ON TABLE dm_arm.dm_arm_read_ranking TO rtwg; 
+GRANT UPDATE ON TABLE dm_arm.dm_arm_read_ranking TO rtwg; 
+GRANT DELETE ON TABLE dm_arm.dm_arm_read_ranking TO rtwg; 
+ 
+-- 军品物业_能源管控 
+GRANT USAGE  ON SCHEMA dm_arm TO rtwg; 
+GRANT SELECT ON TABLE dm_arm.dm_arm_energy TO rtwg; 
+GRANT INSERT ON TABLE dm_arm.dm_arm_energy TO rtwg; 
+GRANT UPDATE ON TABLE dm_arm.dm_arm_energy TO rtwg; 
+GRANT DELETE ON TABLE dm_arm.dm_arm_energy TO rtwg; 
+ 
+-- 军品物业_承接查验_类别分布 
+GRANT USAGE  ON SCHEMA dm_arm TO rtwg; 
+GRANT SELECT ON TABLE dm_arm.dm_arm_inspect_type TO rtwg; 
+GRANT INSERT ON TABLE dm_arm.dm_arm_inspect_type TO rtwg; 
+GRANT UPDATE ON TABLE dm_arm.dm_arm_inspect_type TO rtwg; 
+GRANT DELETE ON TABLE dm_arm.dm_arm_inspect_type TO rtwg; 
+ 
+-- 军品物业_承接查验_指标数 
+GRANT USAGE  ON SCHEMA dm_arm TO rtwg; 
+GRANT SELECT ON TABLE dm_arm.dm_arm_inspect_sum TO rtwg; 
+GRANT INSERT ON TABLE dm_arm.dm_arm_inspect_sum TO rtwg; 
+GRANT UPDATE ON TABLE dm_arm.dm_arm_inspect_sum TO rtwg; 
+GRANT DELETE ON TABLE dm_arm.dm_arm_inspect_sum TO rtwg; 
+ 
+-- 军品物业_承接查验_排名 
+GRANT USAGE  ON SCHEMA dm_arm TO rtwg; 
+GRANT SELECT ON TABLE dm_arm.dm_arm_inspect_ranking TO rtwg; 
+GRANT INSERT ON TABLE dm_arm.dm_arm_inspect_ranking TO rtwg; 
+GRANT UPDATE ON TABLE dm_arm.dm_arm_inspect_ranking TO rtwg; 
+GRANT DELETE ON TABLE dm_arm.dm_arm_inspect_ranking TO rtwg; 
+ 
+-- 军品物业_项目_概览 
+GRANT USAGE  ON SCHEMA dm_arm TO rtwg; 
+GRANT SELECT ON TABLE dm_arm.dm_arm_project_overview TO rtwg; 
+GRANT INSERT ON TABLE dm_arm.dm_arm_project_overview TO rtwg; 
+GRANT UPDATE ON TABLE dm_arm.dm_arm_project_overview TO rtwg; 
+GRANT DELETE ON TABLE dm_arm.dm_arm_project_overview TO rtwg; 
+ 
+-- 军品物业_项目_客户满意度 
+GRANT USAGE  ON SCHEMA dm_arm TO rtwg; 
+GRANT SELECT ON TABLE dm_arm.dm_arm_project_statisfied TO rtwg; 
+GRANT INSERT ON TABLE dm_arm.dm_arm_project_statisfied TO rtwg; 
+GRANT UPDATE ON TABLE dm_arm.dm_arm_project_statisfied TO rtwg; 
+GRANT DELETE ON TABLE dm_arm.dm_arm_project_statisfied TO rtwg; 
+ 
+-- 军品物业_项目_能源管控 
+GRANT USAGE  ON SCHEMA dm_arm TO rtwg; 
+GRANT SELECT ON TABLE dm_arm.dm_arm_project_energy TO rtwg; 
+GRANT INSERT ON TABLE dm_arm.dm_arm_project_energy TO rtwg; 
+GRANT UPDATE ON TABLE dm_arm.dm_arm_project_energy TO rtwg; 
+GRANT DELETE ON TABLE dm_arm.dm_arm_project_energy TO rtwg; 
+ 
+-- 产业运营_概览 
+GRANT USAGE  ON SCHEMA dm_operate TO rtwg; 
+GRANT SELECT ON TABLE dm_operate.dm_operate_overview TO rtwg; 
+GRANT INSERT ON TABLE dm_operate.dm_operate_overview TO rtwg; 
+GRANT UPDATE ON TABLE dm_operate.dm_operate_overview TO rtwg; 
+GRANT DELETE ON TABLE dm_operate.dm_operate_overview TO rtwg; 
+ 
+-- 产业运营_资产招租 
+GRANT USAGE  ON SCHEMA dm_operate TO rtwg; 
+GRANT SELECT ON TABLE dm_operate.dm_operate_rent TO rtwg; 
+GRANT INSERT ON TABLE dm_operate.dm_operate_rent TO rtwg; 
+GRANT UPDATE ON TABLE dm_operate.dm_operate_rent TO rtwg; 
+GRANT DELETE ON TABLE dm_operate.dm_operate_rent TO rtwg; 
+ 
+-- 产业运营_服务 
+GRANT USAGE  ON SCHEMA dm_operate TO rtwg; 
+GRANT SELECT ON TABLE dm_operate.dm_operate_service TO rtwg; 
+GRANT INSERT ON TABLE dm_operate.dm_operate_service TO rtwg; 
+GRANT UPDATE ON TABLE dm_operate.dm_operate_service TO rtwg; 
+GRANT DELETE ON TABLE dm_operate.dm_operate_service TO rtwg; 
+ 
+-- 产业运营_服务_企业服务_月 
+GRANT USAGE  ON SCHEMA dm_operate TO rtwg; 
+GRANT SELECT ON TABLE dm_operate.dm_operate_service_company TO rtwg; 
+GRANT INSERT ON TABLE dm_operate.dm_operate_service_company TO rtwg; 
+GRANT UPDATE ON TABLE dm_operate.dm_operate_service_company TO rtwg; 
+GRANT DELETE ON TABLE dm_operate.dm_operate_service_company TO rtwg; 
+ 
+-- 产业运营_服务_生活服务_月 
+GRANT USAGE  ON SCHEMA dm_operate TO rtwg; 
+GRANT SELECT ON TABLE dm_operate.dm_operate_service_live TO rtwg; 
+GRANT INSERT ON TABLE dm_operate.dm_operate_service_live TO rtwg; 
+GRANT UPDATE ON TABLE dm_operate.dm_operate_service_live TO rtwg; 
+GRANT DELETE ON TABLE dm_operate.dm_operate_service_live TO rtwg; 
+ 
+-- 产业运营_服务_车场运营 
+GRANT USAGE  ON SCHEMA dm_operate TO rtwg; 
+GRANT SELECT ON TABLE dm_operate.dm_operate_park TO rtwg; 
+GRANT INSERT ON TABLE dm_operate.dm_operate_park TO rtwg; 
+GRANT UPDATE ON TABLE dm_operate.dm_operate_park TO rtwg; 
+GRANT DELETE ON TABLE dm_operate.dm_operate_park TO rtwg; 
+ 
+-- 产业运营_服务_车场运营_当月营收 
+GRANT USAGE  ON SCHEMA dm_operate TO rtwg; 
+GRANT SELECT ON TABLE dm_operate.dm_operate_park_income_month TO rtwg; 
+GRANT INSERT ON TABLE dm_operate.dm_operate_park_income_month TO rtwg; 
+GRANT UPDATE ON TABLE dm_operate.dm_operate_park_income_month TO rtwg; 
+GRANT DELETE ON TABLE dm_operate.dm_operate_park_income_month TO rtwg; 
+ 
+-- 产业运营_服务_车场运营_单月停车 
+GRANT USAGE  ON SCHEMA dm_operate TO rtwg; 
+GRANT SELECT ON TABLE dm_operate.dm_operate_park_car_month TO rtwg; 
+GRANT INSERT ON TABLE dm_operate.dm_operate_park_car_month TO rtwg; 
+GRANT UPDATE ON TABLE dm_operate.dm_operate_park_car_month TO rtwg; 
+GRANT DELETE ON TABLE dm_operate.dm_operate_park_car_month TO rtwg; 
+ 
+-- 产业运营_服务_车场运营_盈亏数量 
+GRANT USAGE  ON SCHEMA dm_operate TO rtwg; 
+GRANT SELECT ON TABLE dm_operate.dm_operate_park_car_line TO rtwg; 
+GRANT INSERT ON TABLE dm_operate.dm_operate_park_car_line TO rtwg; 
+GRANT UPDATE ON TABLE dm_operate.dm_operate_park_car_line TO rtwg; 
+GRANT DELETE ON TABLE dm_operate.dm_operate_park_car_line TO rtwg; 
+ 
+-- 产业运营_服务_车场运营_空间运营 
+GRANT USAGE  ON SCHEMA dm_operate TO rtwg; 
+GRANT SELECT ON TABLE dm_operate.dm_operate_park_space TO rtwg; 
+GRANT INSERT ON TABLE dm_operate.dm_operate_park_space TO rtwg; 
+GRANT UPDATE ON TABLE dm_operate.dm_operate_park_space TO rtwg; 
+GRANT DELETE ON TABLE dm_operate.dm_operate_park_space TO rtwg; 
+ 
+-- 资产安全_概览 
+GRANT USAGE  ON SCHEMA dm_asset TO rtwg; 
+GRANT SELECT ON TABLE dm_asset.dm_asset_overview TO rtwg; 
+GRANT INSERT ON TABLE dm_asset.dm_asset_overview TO rtwg; 
+GRANT UPDATE ON TABLE dm_asset.dm_asset_overview TO rtwg; 
+GRANT DELETE ON TABLE dm_asset.dm_asset_overview TO rtwg; 
+ 
+-- 资产安全_隐患数量 
+GRANT USAGE  ON SCHEMA dm_asset TO rtwg; 
+GRANT SELECT ON TABLE dm_asset.dm_asset_danger TO rtwg; 
+GRANT INSERT ON TABLE dm_asset.dm_asset_danger TO rtwg; 
+GRANT UPDATE ON TABLE dm_asset.dm_asset_danger TO rtwg; 
+GRANT DELETE ON TABLE dm_asset.dm_asset_danger TO rtwg; 
+ 
